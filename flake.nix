@@ -20,14 +20,30 @@
         devshells.default = {
           packages = with pkgs; [
             just
-            rlwrap
-            (sbcl.withPackages (p: with p; [
-              adopt
-              alexandria
+	    rlwrap
+	    ((sbcl.withOverrides (self: super: {
+	      plot = super.plot.overrideLispAttrs (old: {
+		systems = old.systems ++ [ "plot/vega" ];
+		lispLibs = old.lispLibs ++ (with pkgs.sbclPackages; [
+		  lass
+		  cl-gists
+		  cl-who
+		  data-frame
+		  lisp-stat
+		  smoothers
+		  yason
+		  parenscript
+		]);
+	      });
+	    })).withPackages (p: with p; [
+	      adopt
+	      alexandria
               cl-ppcre
               esrap
               fiveam
+              fset
               iterate
+              plot
               lparallel
               serapeum
               transducers

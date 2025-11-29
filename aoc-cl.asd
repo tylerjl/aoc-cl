@@ -27,6 +27,6 @@
 			      :components ((:file "tests")))))))
 
 (asdf:defsystem "aoc-cl/bin"
-  :depends-on (:adopt :aoc-cl :trivial-benchmark)
+  :depends-on (:adopt :aoc-cl :lisp-stat :plot :plot/vega :trivial-benchmark)
   :components ((:module "src"
 		:components ((:file "main")))))
