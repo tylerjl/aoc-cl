@@ -60,21 +60,6 @@
 (defun run (time-it benchmarks args)
   (match args
     ((list "build") (build))
-    ;; TODO: This isn't done yet
-    ((list "benchmark")
-     (let ((timer (make-instance 'trivial-benchmark:timer)))
-       (dotimes (_ 100)
-         (trivial-benchmark:with-sampling (timer) (2023:1-1 "resources/2023/day1.txt")))
-       (let ((metric (trivial-benchmark:compute :median (nth 1 (trivial-benchmark:metrics timer)))))
-         (plot:plot
-          (vega:defplot grouped-bar-chart
-              `(:mark :bar
-                :data (:values ,(data-frame:plist-df '(:category #(A A A B B B C C C)
-                                            :group    #(x y z x y z x y z)
-                                            :value    #(0.1 0.6 0.9 0.7 0.2 1.1 0.6 0.1 0.2))))
-                :encoding (:x (:field :category)
-                           :y (:field :value :type :quantitative)
-                           :x-offset (:field :group))))))))
     ((list year day part input)
      (let ((fn-sym (find-symbol (format nil "~a-~a" day part) year)))
        (if fn-sym

@@ -21,21 +21,7 @@
           packages = with pkgs; [
             just
 	    rlwrap
-	    ((sbcl.withOverrides (self: super: {
-	      plot = super.plot.overrideLispAttrs (old: {
-		systems = old.systems ++ [ "plot/vega" ];
-		lispLibs = old.lispLibs ++ (with pkgs.sbclPackages; [
-		  lass
-		  cl-gists
-		  cl-who
-		  data-frame
-		  lisp-stat
-		  smoothers
-		  yason
-		  parenscript
-		]);
-	      });
-	    })).withPackages (p: with p; [
+	    (sbcl.withPackages (p: with p; [
 	      adopt
 	      alexandria
               cl-ppcre
@@ -43,7 +29,6 @@
               fiveam
               fset
               iterate
-              plot
               lparallel
               serapeum
               transducers
